@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import '../week4/siniflar.dart';
+
 void main(List<String> args) {
   final araba1 = Arabalar(
     carMmodel: carModels.Mercedes,
@@ -57,12 +59,59 @@ void main(List<String> args) {
   }
   final index = carItem.indexOf(newCar);
   print(index);
+
+  carItem.add(newCar);
+  carItem.sort(
+    (a, b) => a.money.compareTo(b.money),
+  );
+  print(carItem);
+  final users = carItem
+      .expand(
+        (element) => element.users,
+      )
+      .toList();
+
+  carItem.removeWhere(
+    (element) => element.carMmodel == carModels.Mercedes,
+  );
+  print(carItem);
+  print('***' * 10);
+  calculateToUser(carItem);
+  //Yeni Liste yapıp göndeririz.
+  calculateToUser(carItem.toList());
+  //Yeni liste yapıp göndermenin diğer yolu.
+  calculateToUser([...carItem]);
+  //Yeni bir liste göndermenin diğer yolu.
+  calculateToUser(List.of(carItem));
+}
+
+//! Map lediğin objede return yeni obje döndermen gerekiyor yoksa referanslar karışıyor.
+
+void calculateToUser(List<Arabalar> araba) {
+  final newItems = araba.map(
+    (e) {
+      if (e.carMmodel == carModels.Mercedes) {
+        e.carMmodel == carModels.BMW;
+      }
+      return e;
+      /*
+      return Arabalar(
+        carMmodel:
+            e.carMmodel == carModels.BMW ? carModels.Toyota : e.carMmodel,
+        name: e.name,
+        money: e.money,
+      );
+      */
+    },
+  );
+  print(newItems);
 }
 
 class Arabalar {
   final String name;
   final int money;
   final carModels carMmodel;
+  List<User> users;
   String? sehir;
   bool ikinciEl;
   Arabalar({
@@ -71,6 +120,7 @@ class Arabalar {
     required this.carMmodel,
     this.sehir,
     this.ikinciEl = true,
+    this.users = const [],
   });
 
   @override
