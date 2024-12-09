@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 void main(List<String> args) {
   int sayi = 10;

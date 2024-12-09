@@ -12,6 +12,7 @@ void main(List<String> args) {
 
   try {
     int sayi = 100 ~/ 0;
+    // ignore: deprecated_member_use
     throw IntegerDivisionByZeroException();
     print(sayi);
   } catch (e) {
